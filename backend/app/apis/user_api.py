@@ -1,4 +1,4 @@
-from flask import Blueprint, request, jsonify
+from flask import Blueprint
 from app.models.user_model import User
 from app.services.user_service import UserService
 from app.utils.hashing_utils import hash_password

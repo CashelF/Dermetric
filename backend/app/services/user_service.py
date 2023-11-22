@@ -1,5 +1,4 @@
 from app.models.user_model import User
-from app import mongo
 from mongoengine.errors import DoesNotExist
 
 class UserService:

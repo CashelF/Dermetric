@@ -1,4 +1,4 @@
-from flask import Blueprint, request, jsonify
+from flask import Blueprint, jsonify, request
 from werkzeug.utils import secure_filename
 import os
 
