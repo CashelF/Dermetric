@@ -7,6 +7,7 @@ mongo = PyMongo()
 def create_app():
     app = Flask(__name__)
     app.config.from_object(Config)
+    app.config["MONGO_URI"] = Config.MONGO_URI
     app.static_url_path = '/static'
     mongo.init_app(app)
 
