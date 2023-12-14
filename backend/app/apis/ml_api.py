@@ -1,13 +1,21 @@
-from flask import Blueprint, request, jsonify
-from app.services import ml_service
+import os
+from flask import Blueprint, request, jsonify, current_app
+import numpy as np
+from app.services.ml_service import MLService
 
+UPLOAD_FOLDER = 'IMAGES_UPLOAD_FOLDER'
 ml_bp = Blueprint('ml_bp', __name__)
 
 @ml_bp.route('/predict', methods=['POST'])
 def predict():
-    try:
-        prediction = ml_service.predict(request.files['image'])
-        return jsonify({'prediction': prediction})
+  temp_path = os.path.join(current_app.config[UPLOAD_FOLDER], "temp.jpg")
+  try:
+    request.files['file'].save(temp_path)
+    model = MLService()
+    prediction = model.predict(temp_path)
+    os.remove(temp_path)
+    return jsonify({'prediction': prediction})
 
-    except Exception as e:
-        return jsonify({'error': str(e)})
+  except Exception as e:
+    # os.remove(temp_path)
+    return jsonify({'error': str(e)})
