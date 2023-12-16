@@ -1,12 +1,14 @@
 import React, { useState } from 'react';
-import { View, Text, StyleSheet, Button } from 'react-native';
-import ImageUploadButton from './components/ImageUploadButton';
-import ImageView from './components/ImageView';
-import DescriptionInput from './components/DescriptionInput';
+import { View, Image, Text, StyleSheet, Button } from 'react-native';
+import ImageUploadButton from '../components/ImageUploadButton';
+import ImageView from '../components/ImageView';
+import DescriptionText from '../components/DescriptionText';
+
+const doctorImage = require('../../assets/images/UploadScreenDoctor.svg');
 
 const UploadScreen = () => {
   const [image, setImage] = useState(null);
-  const [description, setDescription] = useState('');
+  const [description, setDescription] = useState('Use our image classification machine learning algorithms to test for skin disorders');
 
   const handleUpload = () => {
     console.log('Image: ', image);
@@ -16,9 +18,12 @@ const UploadScreen = () => {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.header}>Upload your Image</Text>
-      <ImageView image={image} />
-      <DescriptionInput description={description} setDescription={setDescription} />
+        <Image
+            source={doctorImage}
+            style={styles.image}
+        />
+      <Text style={styles.header}>AI Medical Assistant</Text>
+      <DescriptionText description={description} setDescription={setDescription} />
       <ImageUploadButton setImage={setImage} />
       <Button title="Upload" onPress={handleUpload} />
     </View>
@@ -26,15 +31,20 @@ const UploadScreen = () => {
 };
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  header: {
-    fontSize: 20,
-    marginBottom: 20,
-  },
+    container: {
+        flex: 1,
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
+    image: {
+        width: 269,
+        height: 231,
+    },
+    header: {
+        fontSize: 20,
+        marginBottom: 20,
+        fontFamily: 'Nunito-Bold'
+    },
 });
 
 export default UploadScreen;
