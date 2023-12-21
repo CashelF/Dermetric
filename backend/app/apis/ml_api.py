@@ -1,6 +1,5 @@
 import os
 from flask import Blueprint, request, jsonify, current_app
-import numpy as np
 from app.services.ml_service import MLService
 
 UPLOAD_FOLDER = 'IMAGES_UPLOAD_FOLDER'
@@ -18,4 +17,4 @@ def predict():
 
   except Exception as e:
     # os.remove(temp_path)
-    return jsonify({'error': str(e)})
+    return jsonify({'error': str(e)}, 500)
