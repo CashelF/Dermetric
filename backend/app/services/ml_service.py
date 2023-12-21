@@ -1,4 +1,3 @@
-import pickle
 import tensorflow as tf
     
 IMG_WIDTH = 224
@@ -12,7 +11,7 @@ class MLService:
 
     def process_image(self, img_path):
         image = tf.io.read_file(img_path)
-        image = tf.image.decode_jpeg(image, channels=3)
+        image = tf.image.decode_image(image, channels=3, expand_animations=False)
         image = tf.image.convert_image_dtype(image, tf.float32)
         image = tf.image.resize(image, size=[IMG_WIDTH, IMG_HEIGHT])
         image = tf.expand_dims(image, 0)
