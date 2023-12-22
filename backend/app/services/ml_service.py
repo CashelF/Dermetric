@@ -7,7 +7,7 @@ class MLService:
     def __init__(self):
         self.img_width = 224
         self.img_height = 224
-        self.model = tf.keras.models.load_model('app/static/serialized_models/dermavision_model_attempt_1')
+        self.model = tf.keras.models.load_model('app/static/serialized_models/dermetric_model_attempt_1')
 
     def process_image(self, img_path):
         image = tf.io.read_file(img_path)

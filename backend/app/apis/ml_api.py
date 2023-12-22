@@ -14,8 +14,11 @@ def predict():
     file.save(temp_path)
     model = MLService()
     prediction = model.predict(temp_path)
-    os.remove(temp_path)
     return jsonify({'prediction': prediction})
 
   except Exception as e:
     return jsonify({'error': str(e)}), 500
+  
+  finally:
+    if os.path.exists(temp_path):
+      os.remove(temp_path)
