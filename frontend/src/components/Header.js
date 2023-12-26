@@ -9,8 +9,8 @@ const Header = () => {
   return (
     <SafeAreaView>
         <View style={styles.headerContainer}>
-            <FontAwesome name='home' size={32}></FontAwesome>
-            <FontAwesome name='medkit' size={32}></FontAwesome>
+            <FontAwesome name='home' style={styles.leftIcon} size={32}></FontAwesome>
+            <FontAwesome name='medkit' style={styles.rightIcon} size={32}></FontAwesome>
         </View>
     </SafeAreaView>
   );
@@ -24,11 +24,11 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     marginHorizontal:22,
   },
-  iconStyle: {
-    marginLeft: 'auto'
+  leftIcon: {
+    color: '#45B3CB'
   },
   rightIcon: {
-    // Additional styling for the right icon if needed
+    color: '#45B3CB'
   }
 });
 
