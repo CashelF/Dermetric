@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Dimensions } from 'react-native';
-import { launchImageLibrary } from 'react-native-image-picker';
+import * as ImagePicker from 'expo-image-picker';
 import { View, Image, Text, StyleSheet, Platform, TouchableOpacity } from 'react-native';
 import DescriptionText from '../components/DescriptionText';
 import colors from '../../assets/colors/colors';
@@ -8,7 +8,7 @@ import colors from '../../assets/colors/colors';
 const screenWidth = Dimensions.get('window').width;
 const ellipseHeight = screenWidth * 1.6;
 const doctorImage = require('../../assets/images/UploadScreenDoctor.png');
-const SERVER_URL = 'http://localhost:5000';
+const SERVER_URL = 'http://10.0.2.2:5000';
 
 const base64ToBlob = (base64, mimeType) => {
   const byteCharacters = atob(base64.split(',')[1]);
@@ -46,40 +46,50 @@ const UploadScreen = () => {
   };
 
   const handleUpload = async () => {
-    launchImageLibrary({ mediaType: 'photo' }, async (response) => {
-      if (response.didCancel) {
-        console.log('User cancelled image picker');
-      } else if (response.error) {
-        console.log('ImagePicker Error: ', response.error);
-        alert('Error in image upload');
-      } else {
-        if (response.assets && response.assets.length > 0) {
-          const firstImage = response.assets[0];
-
-          try {
-            const response = await fetch(`${SERVER_URL}/api/ml/predict`, {
-              method: 'POST',
-              body: createFormData(firstImage)
-            });
-    
-            if (!response.ok) {
-              throw new Error('Something went wrong with the API call');
-            }
-    
-            const result = await response.json();
-            console.log('API Response: ', result);
-          } catch (error) {
-            console.error('Error during image upload: ', error);
-          }
-        } else {
-          throw new Error('No image found');
-        }
+    try {
+      // Request permission (if not already granted)
+      const permissionResult = await ImagePicker.requestMediaLibraryPermissionsAsync();
+      if (!permissionResult.granted) {
+        alert("Photo access is not enabled!");
+        return;
       }
-    });
-  };
+  
+      // Launch the image picker
+      const pickerResult = await ImagePicker.launchImageLibraryAsync({
+        mediaTypes: ImagePicker.MediaTypeOptions.Images,
+        allowsEditing: true,
+        quality: 1,
+      });
+  
+      if (pickerResult.canceled === true) {
+        return;
+      }
+  
+      console.log('Picker Result: ', pickerResult);
+      // Continue with your upload process
+      const formData = createFormData({
+        uri: pickerResult.assets[0].uri,
+        type: 'image/jpeg', // Adjust based on actual image type
+        name: 'photo.jpg', // Adjust based on actual image name or use a generated name
+      });
+  
+      const response = await fetch(`${SERVER_URL}/api/ml/predict`, {
+        method: 'POST',
+        body: formData,
+      });
+  
+      if (!response.ok) {
+        throw new Error('Something went wrong with the API call');
+      }
+  
+      const result = await response.json();
+      console.log('API Response: ', result);
+    } catch (error) {
+      console.error('Error during image upload: ', error);
+    }
+  };  
   
   
-
   return (
     <View style={styles.container}>
       <View style={styles.imageAndEllipseContainer}>
