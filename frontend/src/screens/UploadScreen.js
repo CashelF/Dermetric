@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
 import { Dimensions } from 'react-native';
 import { launchImageLibrary } from 'react-native-image-picker';
-import { View, Image, Text, StyleSheet, Button, Platform, TouchableOpacity } from 'react-native';
+import { View, Image, Text, StyleSheet, Platform, TouchableOpacity } from 'react-native';
 import DescriptionText from '../components/DescriptionText';
 import colors from '../../assets/colors/colors';
 
 const screenWidth = Dimensions.get('window').width;
 const ellipseHeight = screenWidth * 1.6;
-const doctorImage = require('../../assets/images/UploadScreenDoctor.svg');
+const doctorImage = require('../../assets/images/UploadScreenDoctor.png');
 const SERVER_URL = 'http://localhost:5000';
 
 const base64ToBlob = (base64, mimeType) => {
@@ -90,7 +90,7 @@ const UploadScreen = () => {
       <Text style={styles.header}>AI Medical Assistant</Text>
       <DescriptionText style={{fontSize: 16}} description={description} setDescription={setDescription} />
       <TouchableOpacity style={styles.button} onPress={handleUpload}>
-        <Text style={{ color: 'white', fontSize: 18, fontFamily: "Nunito-Bold", fontWeight: '700' }}>Upload Image</Text>
+        <Text style={{ color: 'white', fontSize: 18, fontFamily: 'Nunito-Bold', fontWeight: '700' }}>Upload Image</Text>
       </TouchableOpacity>
     </View>
   );
