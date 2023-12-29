@@ -1,7 +1,6 @@
 import tensorflow as tf
-    
-IMG_WIDTH = 224
-IMG_HEIGHT = 224
+import numpy as np
+from PIL import Image
 
 class MLService:
     def __init__(self):
@@ -9,19 +8,18 @@ class MLService:
         self.img_height = 224
         self.model = tf.keras.models.load_model('app/static/serialized_models/dermetric_model_attempt_1')
 
-    def process_image(self, img_path):
-        image = tf.io.read_file(img_path)
-        image = tf.image.decode_image(image, channels=3, expand_animations=False)
-        image = tf.image.convert_image_dtype(image, tf.float32)
-        image = tf.image.resize(image, size=[IMG_WIDTH, IMG_HEIGHT])
-        image = tf.expand_dims(image, 0)
-        return image
+    def process_image(self, image_file):
+        image = Image.open(image_file).convert('RGB') # convert to RGB for consistency, pngs have transparency channel
+        image = image.resize((self.img_width, self.img_height))
+        image_array = np.array(image)
+        image_array = tf.convert_to_tensor(image_array, dtype=tf.float32)
+        image_array = tf.expand_dims(image_array, 0)
+        return image_array
 
-    def predict(self, image_path):
+    def predict(self, image_file):
         try:
-            processed_image = self.process_image(image_path)
+            processed_image = self.process_image(image_file)
             prediction = self.model.predict(processed_image)
             return prediction[0].tolist()
-
         except Exception as e:
-            return e
+            return str(e)
