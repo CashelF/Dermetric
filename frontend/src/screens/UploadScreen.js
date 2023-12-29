@@ -8,7 +8,7 @@ import colors from '../../assets/colors/colors';
 const screenWidth = Dimensions.get('window').width;
 const ellipseHeight = screenWidth * 1.6;
 const doctorImage = require('../../assets/images/UploadScreenDoctor.png');
-const SERVER_URL = 'http://10.0.2.2:5000';
+const SERVER_URL = 'http://ec2-3-19-56-25.us-east-2.compute.amazonaws.com';
 
 const base64ToBlob = (base64, mimeType) => {
   const byteCharacters = atob(base64.split(',')[1]);
