@@ -2,8 +2,9 @@ import React, { useState, useEffect } from 'react';
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, View, Text } from 'react-native';
 import * as Font from 'expo-font';
-import UploadScreen from './src/screens/UploadScreen';
 import * as SplashScreen from 'expo-splash-screen';
+import { NavigationContainer } from '@react-navigation/native';
+import AppNavigator from './NavigationContainer';
 
 export default function App() {
   const [fontsLoaded, setFontsLoaded] = useState(false);
@@ -36,10 +37,10 @@ export default function App() {
   }
 
   return (
-    <View style={styles.container}>
-      <UploadScreen />
+    <NavigationContainer>
       <StatusBar style="auto" />
-    </View>
+      <AppNavigator />
+    </NavigationContainer>
   );
 }
 

@@ -1,8 +1,12 @@
 import React from 'react';
 import { View, StyleSheet, Text } from 'react-native';
 import Header from '../components/Header';
+import { useRoute } from '@react-navigation/native';
 
 const ResultScreen = () => {
+  const route = useRoute();
+  const result = route.params?.resultData;
+  console.log(result);
   return (
     <View style={styles.container}>
       <Header />

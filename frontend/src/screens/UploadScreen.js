@@ -4,6 +4,7 @@ import * as ImagePicker from 'expo-image-picker';
 import { View, Image, Text, StyleSheet, Platform, TouchableOpacity } from 'react-native';
 import DescriptionText from '../components/DescriptionText';
 import colors from '../../assets/colors/colors';
+import { useNavigation } from '@react-navigation/native';
 
 const screenWidth = Dimensions.get('window').width;
 const ellipseHeight = screenWidth * 1.6;
@@ -22,6 +23,7 @@ const base64ToBlob = (base64, mimeType) => {
 
 const UploadScreen = () => {
   const [description, setDescription] = useState('Use our image classification machine learning algorithms to test for skin disorders');
+  const navigation = useNavigation();
 
   const createFormData = (photo = {}) => {
     const mimeTypeMatch = photo.uri.match(/^data:(.*);base64,/);
@@ -83,7 +85,7 @@ const UploadScreen = () => {
       }
   
       const result = await response.json();
-      console.log('API Response: ', result);
+      navigation.navigate('ResultScreen', { resultData: result });
     } catch (error) {
       console.error('Error during image upload: ', error);
     }
