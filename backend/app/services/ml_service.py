@@ -20,6 +20,8 @@ class MLService:
         try:
             processed_image = self.process_image(image_file)
             prediction = self.model.predict(processed_image)
-            return prediction[0].tolist()
+            labels = ["MEL", "NV", "BCC", "AK", "BKL", "DF", "VASC", "SCC"] # TODO: VERIFY ORDER OF LABELS
+            prediction_dict = dict(zip(labels, prediction[0].tolist()))
+            return prediction_dict
         except Exception as e:
             return str(e)
