@@ -1,12 +1,16 @@
 {
   "name": "frontend",
   "version": "1.0.0",
+  "homepage": "https://CashelF.github.io/Dermetric",
   "main": "node_modules/expo/AppEntry.js",
   "scripts": {
+    "predeploy": "npm run web-build",
+    "deploy": "gh-pages -d web-build",
     "start": "expo start",
     "android": "expo start --android",
     "ios": "expo start --ios",
-    "web": "expo start --web"
+    "web": "expo start --web",
+    "web-build": "npx expo export:web"
   },
   "dependencies": {
     "@expo/webpack-config": "^19.0.0",
@@ -24,7 +28,8 @@
     "react-native-web": "~0.19.6"
   },
   "devDependencies": {
-    "@babel/core": "^7.20.0"
+    "@babel/core": "^7.20.0",
+    "gh-pages": "^6.1.1"
   },
   "private": true
 }

@@ -2,14 +2,13 @@ import React, { useState } from 'react';
 import { Dimensions } from 'react-native';
 import * as ImagePicker from 'expo-image-picker';
 import { View, Image, Text, StyleSheet, Platform, TouchableOpacity } from 'react-native';
-import DescriptionText from '../components/DescriptionText';
 import colors from '../../assets/colors/colors';
 import { useNavigation } from '@react-navigation/native';
 
 const screenWidth = Dimensions.get('window').width;
 const ellipseHeight = screenWidth * 1.6;
 const doctorImage = require('../../assets/images/UploadScreenDoctor.png');
-const SERVER_URL = 'http://ec2-3-19-56-25.us-east-2.compute.amazonaws.com';
+const SERVER_URL = 'http://3.134.212.68';
 
 const base64ToBlob = (base64, mimeType) => {
   const byteCharacters = atob(base64.split(',')[1]);
@@ -100,7 +99,7 @@ const UploadScreen = () => {
         <Image source={doctorImage} style={styles.image} />
       </View>
       <Text style={styles.header}>AI Medical Assistant</Text>
-      <DescriptionText style={{fontSize: 16}} description={description} setDescription={setDescription} />
+      <Text style={styles.description}>{description}</Text>
       <TouchableOpacity style={styles.button} onPress={handleUpload}>
         <Text style={{ color: 'white', fontSize: 18, fontFamily: 'Nunito-Bold', fontWeight: '700' }}>Upload Image</Text>
       </TouchableOpacity>
@@ -146,6 +145,13 @@ const styles = StyleSheet.create({
         marginBottom: 20,
         fontFamily: 'Nunito-Bold',
         fontWeight: '700',
+    },
+    description: {
+        fontSize: 16,
+        fontFamily: 'Nunito-Regular',
+        textAlign: 'center',
+        marginHorizontal: 50,
+        marginBottom: 50,
     },
     button: {
         backgroundColor: colors.accent,

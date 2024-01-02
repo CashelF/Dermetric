@@ -43,3 +43,6 @@ frontend/.env*.local
 
 # typescript
 frontend/*.tsbuildinfo
+
+# misc
+frontend/%ProgramData%
