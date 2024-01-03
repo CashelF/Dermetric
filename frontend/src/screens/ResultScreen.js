@@ -2,6 +2,7 @@ import React from 'react';
 import { View, StyleSheet, Text } from 'react-native';
 import Header from '../components/Header';
 import { useRoute } from '@react-navigation/native';
+import { FontAwesome } from '@expo/vector-icons'
 
 const ResultScreen = () => {
   const route = useRoute();
@@ -19,25 +20,45 @@ const ResultScreen = () => {
       <View style={styles.boxContainer}>
         <View style={styles.box}>
             <View style={{...styles.inner, backgroundColor: '#45B3CB'}}>
-                <Text>Box 1</Text>
+                <FontAwesome name='medkit' style={styles.innerIcon} size={32}></FontAwesome>
+                <View style={styles.innerInlineText}>
+                    <Text style={styles.innerNamePerc}>Name</Text>
+                    <Text style={styles.innerNamePerc}>90%</Text>
+                </View>
+                <Text style={styles.descriptionText}>Description</Text>
             </View>
         </View>
 
         <View style={styles.box}>
             <View style={{...styles.inner, backgroundColor: '#ED7390'}}>
-                <Text>Box 1</Text>
+                <FontAwesome name='medkit' style={styles.innerIcon} size={32}></FontAwesome>
+                <View style={styles.innerInlineText}>
+                    <Text style={styles.innerNamePerc}>Name</Text>
+                    <Text style={styles.innerNamePerc}>90%</Text>
+                </View>
+                <Text style={styles.descriptionText}>Description</Text>
             </View>
         </View>
       
         <View style={styles.box}>
             <View style={{...styles.inner, backgroundColor: '#E59850'}}>
-                <Text>Box 1</Text>
+                <FontAwesome name='medkit' style={styles.innerIcon} size={32}></FontAwesome>
+                <View style={styles.innerInlineText}>
+                    <Text style={styles.innerNamePerc}>Name</Text>
+                        <Text style={styles.innerNamePerc}>90%</Text>
+                </View>
+                <Text style={styles.descriptionText}>Description</Text>
             </View>
         </View>
       
         <View style={styles.box}>
             <View style={{...styles.inner, backgroundColor: '#45B3CB'}}>
-                <Text>Box 1</Text>
+                <FontAwesome name='medkit' style={styles.innerIcon} size={32}></FontAwesome>
+                <View style={styles.innerInlineText}>
+                    <Text style={styles.innerNamePerc}>Name</Text>
+                    <Text style={styles.innerNamePerc}>90%</Text>
+                </View>
+                <Text style={styles.descriptionText}>Description</Text>
             </View>
         </View>
         </View>
@@ -63,8 +84,9 @@ const styles = StyleSheet.create({
   },
   inner : {
     flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
+    width: '100%',
+    paddingHorizontal: '10%',
+    paddingVertical: '30%',
     borderRadius: 15
   },
   mainTextContainer: {
@@ -73,6 +95,24 @@ const styles = StyleSheet.create({
   mainText: {
     fontSize: 24,
     lineHeight: 32
+  },
+  innerIcon: {
+    color: 'white'
+  },
+  innerInlineText: {
+    paddingTop: '35%',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
+  innerNamePerc: {
+    color: 'white',
+    fontSize: 16,
+    fontWeight: 'bold'
+  },
+  descriptionText: {
+    paddingTop: '5%',
+    color: 'white',
+    fontSize: 12
   }
 });
 
