@@ -13,7 +13,7 @@ services:
       context: .
     image: cashl/dermetric_web_server
     ports:
-      - 5000:80
+      - 5000:5000
     container_name: dermetric_web_server_container
 
 # The commented out section below is an example of how to define a PostgreSQL

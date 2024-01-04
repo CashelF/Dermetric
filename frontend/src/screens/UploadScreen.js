@@ -8,7 +8,7 @@ import { useNavigation } from '@react-navigation/native';
 const screenWidth = Dimensions.get('window').width;
 const ellipseHeight = screenWidth * 1.6;
 const doctorImage = require('../../assets/images/UploadScreenDoctor.png');
-const SERVER_URL = 'http://3.134.212.68';
+const SERVER_URL = 'https://api.cashel.dev';
 
 const base64ToBlob = (base64, mimeType) => {
   const byteCharacters = atob(base64.split(',')[1]);
