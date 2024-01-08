@@ -1,14 +1,14 @@
 import React, { useState } from 'react';
-import { Dimensions } from 'react-native';
+import { Dimensions, View, Image, Text, StyleSheet, Platform, TouchableOpacity } from 'react-native';
 import * as ImagePicker from 'expo-image-picker';
-import { View, Image, Text, StyleSheet, Platform, TouchableOpacity } from 'react-native';
 import colors from '../../assets/colors/colors';
 import { useNavigation } from '@react-navigation/native';
 
+// Constants and utility functions
+const SERVER_URL = 'https://api.cashel.dev';
 const screenWidth = Dimensions.get('window').width;
 const ellipseHeight = screenWidth * 1.6;
 const doctorImage = require('../../assets/images/UploadScreenDoctor.png');
-const SERVER_URL = 'https://api.cashel.dev';
 
 const base64ToBlob = (base64, mimeType) => {
   const byteCharacters = atob(base64.split(',')[1]);
@@ -21,8 +21,29 @@ const base64ToBlob = (base64, mimeType) => {
 };
 
 const UploadScreen = () => {
-  const [description, setDescription] = useState('Use our image classification machine learning algorithms to test for skin disorders');
   const navigation = useNavigation();
+
+  const requestPermissionAndPickImage = async () => {
+    // Request permission (if not already granted)
+    const permissionResult = await ImagePicker.requestMediaLibraryPermissionsAsync();
+    if (!permissionResult.granted) {
+      alert("Photo access is not enabled!");
+      return;
+    }
+
+    // Launch the image picker
+    const pickerResult = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.Images,
+      allowsEditing: true,
+      quality: 1,
+    });
+
+    if (pickerResult.canceled === true) {
+      return;
+    }
+
+    return pickerResult;
+  };
 
   const createFormData = (photo = {}) => {
     const mimeTypeMatch = photo.uri.match(/^data:(.*);base64,/);
@@ -41,33 +62,16 @@ const UploadScreen = () => {
       formData.append('file', imageBlob, photo.fileName || 'image.jpg');
     }
 
-    console.log('Form Data: ', formData);
-
     return formData;
   };
 
   const handleUpload = async () => {
     try {
-      // Request permission (if not already granted)
-      const permissionResult = await ImagePicker.requestMediaLibraryPermissionsAsync();
-      if (!permissionResult.granted) {
-        alert("Photo access is not enabled!");
+      const pickerResult = await requestPermissionAndPickImage();
+      if (!pickerResult) {
         return;
       }
   
-      // Launch the image picker
-      const pickerResult = await ImagePicker.launchImageLibraryAsync({
-        mediaTypes: ImagePicker.MediaTypeOptions.Images,
-        allowsEditing: true,
-        quality: 1,
-      });
-  
-      if (pickerResult.canceled === true) {
-        return;
-      }
-  
-      console.log('Picker Result: ', pickerResult);
-      // Continue with your upload process
       const formData = createFormData({
         uri: pickerResult.assets[0].uri,
         type: 'image/jpeg', // Adjust based on actual image type
@@ -87,6 +91,7 @@ const UploadScreen = () => {
       navigation.navigate('ResultScreen', { resultData: result });
     } catch (error) {
       console.error('Error during image upload: ', error);
+      alert('Error during image upload. Please try again.');
     }
   };  
   
@@ -99,7 +104,9 @@ const UploadScreen = () => {
         <Image source={doctorImage} style={styles.image} />
       </View>
       <Text style={styles.header}>AI Medical Assistant</Text>
-      <Text style={styles.description}>{description}</Text>
+      <Text style={styles.description}>
+        Use our image classification machine learning algorithms to test for skin disorders
+      </Text>
       <TouchableOpacity style={styles.button} onPress={handleUpload}>
         <Text style={{ color: 'white', fontSize: 18, fontFamily: 'Nunito-Bold', fontWeight: '700' }}>Upload Image</Text>
       </TouchableOpacity>
@@ -107,6 +114,7 @@ const UploadScreen = () => {
   );
 };
 
+//Styles
 const styles = StyleSheet.create({
     container: {
         flex: 1,
