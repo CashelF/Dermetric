@@ -6,8 +6,17 @@ import { FontAwesome } from '@expo/vector-icons'
 
 const ResultScreen = () => {
   const route = useRoute();
-  const result = route.params?.resultData;
+  const result1 = route.params?.resultData;
+  const result = result1["prediction"]
   console.log(result);
+  var items = Object.keys(result).map(
+    (key) => { return [key, result[key]] 
+  });
+  items.sort(
+    (first, second) => { return second[1] - first[1] }
+  );
+  console.log(items)
+  var full_name = {"MEL": "Melanoma", "NV": "Melanocytic Nevus", "BCC": "Basal Cell Carcinoma", "AK": "Actinic Keratosis", "BKL": "Benign Keratosis", "DF" : "Dermatofibroma", "VASC": "Vascular Lesion", "SCC": "Squamous Cell Carcinoma"}
   return (
     <View style={styles.container}>
       <Header />
@@ -22,10 +31,10 @@ const ResultScreen = () => {
             <View style={{...styles.inner, backgroundColor: '#45B3CB'}}>
                 <FontAwesome name='medkit' style={styles.innerIcon} size={32}></FontAwesome>
                 <View style={styles.innerInlineText}>
-                    <Text style={styles.innerNamePerc}>Name</Text>
-                    <Text style={styles.innerNamePerc}>90%</Text>
+                    <Text style={styles.innerNamePerc}>{items[0][0]}</Text>
+                    <Text style={styles.innerNamePerc}>{(items[0][1] * 100).toFixed(2)}%</Text>
                 </View>
-                <Text style={styles.descriptionText}>Description</Text>
+                <Text style={styles.descriptionText}>{full_name[items[0][0]]}</Text>
             </View>
         </View>
 
@@ -33,10 +42,10 @@ const ResultScreen = () => {
             <View style={{...styles.inner, backgroundColor: '#ED7390'}}>
                 <FontAwesome name='medkit' style={styles.innerIcon} size={32}></FontAwesome>
                 <View style={styles.innerInlineText}>
-                    <Text style={styles.innerNamePerc}>Name</Text>
-                    <Text style={styles.innerNamePerc}>90%</Text>
+                    <Text style={styles.innerNamePerc}>{items[1][0]}</Text>
+                    <Text style={styles.innerNamePerc}>{(items[1][1] * 100).toFixed(2)}%</Text>
                 </View>
-                <Text style={styles.descriptionText}>Description</Text>
+                <Text style={styles.descriptionText}>{full_name[items[1][0]]}</Text>
             </View>
         </View>
       
@@ -44,10 +53,10 @@ const ResultScreen = () => {
             <View style={{...styles.inner, backgroundColor: '#E59850'}}>
                 <FontAwesome name='medkit' style={styles.innerIcon} size={32}></FontAwesome>
                 <View style={styles.innerInlineText}>
-                    <Text style={styles.innerNamePerc}>Name</Text>
-                        <Text style={styles.innerNamePerc}>90%</Text>
+                    <Text style={styles.innerNamePerc}>{items[2][0]}</Text>
+                        <Text style={styles.innerNamePerc}>{(items[2][1] * 100).toFixed(2)}%</Text>
                 </View>
-                <Text style={styles.descriptionText}>Description</Text>
+                <Text style={styles.descriptionText}>{full_name[items[2][0]]}</Text>
             </View>
         </View>
       
@@ -55,10 +64,10 @@ const ResultScreen = () => {
             <View style={{...styles.inner, backgroundColor: '#45B3CB'}}>
                 <FontAwesome name='medkit' style={styles.innerIcon} size={32}></FontAwesome>
                 <View style={styles.innerInlineText}>
-                    <Text style={styles.innerNamePerc}>Name</Text>
-                    <Text style={styles.innerNamePerc}>90%</Text>
+                    <Text style={styles.innerNamePerc}>{items[3][0]}</Text>
+                    <Text style={styles.innerNamePerc}>{(items[3][1] * 100).toFixed(2)}%</Text>
                 </View>
-                <Text style={styles.descriptionText}>Description</Text>
+                <Text style={styles.descriptionText}>{full_name[items[3][0]]}</Text>
             </View>
         </View>
         </View>
