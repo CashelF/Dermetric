@@ -2,6 +2,16 @@ import tensorflow as tf
 import numpy as np
 from PIL import Image
 
+def singleton(cls):
+    instances = {}
+
+    def get_instance(*args, **kwargs):
+        if cls not in instances:
+            instances[cls] = cls(*args, **kwargs)
+        return instances[cls]
+    return get_instance
+
+@singleton
 class MLService:
     def __init__(self):
         self.img_width = 224

@@ -1,4 +1,5 @@
 import io
+import gc
 from flask import Blueprint, request, jsonify, current_app
 from app.services.ml_service import MLService
 from werkzeug.utils import secure_filename
@@ -16,13 +17,15 @@ def predict():
       file.save(in_memory_file)
       in_memory_file.seek(0)
 
-      model = MLService()
-      prediction = model.predict(in_memory_file)
+      model_service = MLService()
+      prediction = model_service.predict(in_memory_file)
       in_memory_file.close()
+      gc.collect()
       return jsonify({'prediction': prediction})
 
     except Exception as e:
       in_memory_file.close()
+      gc.collect()
       return jsonify({'error': str(e)}), 500
 
   return jsonify({'error': 'No file provided'}), 400
