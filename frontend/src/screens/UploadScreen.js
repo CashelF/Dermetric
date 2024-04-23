@@ -4,6 +4,7 @@ import * as ImagePicker from 'expo-image-picker';
 import colors from '../../assets/colors/colors';
 import { useNavigation } from '@react-navigation/native';
 import ClipLoader from "react-spinners/ClipLoader";
+import NavigationBar from './NavigationBar';
 
 // Constants and utility functions
 const SERVER_URL = 'https://api.cashel.dev';
@@ -91,7 +92,7 @@ const UploadScreen = () => {
         }
   
         const result = await response.json();
-        navigation.navigate('ResultScreen', { resultData: result });
+        navigation.navigate('Main', { screen: 'ResultScreen', params: { resultData: result } });
       } catch (error) {
         console.error('Error during image upload: ', error);
         alert('Error during image upload. Please try again.');
