@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { Dimensions, View, Image, Text, StyleSheet, Platform, TouchableOpacity, ActivityIndicator } from 'react-native';
+import React, { useState } from 'react';
+import { Dimensions, View, Image, Text, StyleSheet, Platform, TouchableOpacity } from 'react-native';
 import * as ImagePicker from 'expo-image-picker';
 import colors from '../../assets/colors/colors';
 import { useNavigation } from '@react-navigation/native';
@@ -118,7 +118,7 @@ const UploadScreen = () => {
       )} 
       <View style={styles.imageAndEllipseContainer}>
         <View style={styles.ellipse} />
-        <Text style={styles.title}>Dermetric.</Text>
+        <Text style={styles.title}>Dermetric</Text>
         <Image source={doctorImage} style={styles.image} />
       </View>
       <Text style={styles.header}>AI Medical Assistant</Text>
@@ -163,19 +163,20 @@ const styles = StyleSheet.create({
       transform: [{ scaleX: 1.25 }],
     },
     image: {
-        width: screenWidth * 0.5,
-        height: screenWidth * 0.5 * (231/269),
+        width: screenWidth * 0.4,
+        height: screenWidth * 0.4 * (231/269),
         zIndex: 1,
+        aspectRatio: 1,
     },
     header: {
-        fontSize: 18,
+        fontSize: 22,
         marginTop: 50,
         marginBottom: 20,
         fontFamily: 'Nunito-Bold',
         fontWeight: '700',
     },
     description: {
-        fontSize: 16,
+        fontSize: 20,
         fontFamily: 'Nunito-Regular',
         textAlign: 'center',
         marginHorizontal: 50,
@@ -184,8 +185,12 @@ const styles = StyleSheet.create({
     button: {
         backgroundColor: colors.accent,
         borderRadius: 20,
-        padding: 10,
-        width: '75%',
+        paddingHorizontal: 10, 
+        paddingVertical: 20, 
+        
+        marginBottom: 30, 
+        /* width: '75%',*/
+        width: screenWidth * 0.25, 
         height: 50,
         justifyContent: 'center',
         alignItems: 'center',
