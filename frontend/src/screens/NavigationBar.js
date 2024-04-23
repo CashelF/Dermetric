@@ -29,7 +29,7 @@ function NavigationBar() {
                 options={{
                 tabBarLabel: 'Conditions',
                 tabBarIcon: ({ color }) => (
-                    <MaterialCommunityIcons name="bell" color={color} size={26} />
+                    <MaterialCommunityIcons name="medical-bag" color={color} size={26} />
                 ),
                 }}
             />
