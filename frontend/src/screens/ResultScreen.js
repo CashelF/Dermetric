@@ -1,3 +1,4 @@
+/*
 import React, { useState, useRef } from 'react';
 import { View, StyleSheet, Text, TouchableOpacity, Animated, Easing } from 'react-native';
 import Header from '../components/Header';
@@ -91,6 +92,94 @@ const rotateArrow = () => {
 );
 
 };
+*/
+import React, { useState, useRef } from 'react';
+import { View, StyleSheet, Text, TouchableOpacity, Animated, Easing } from 'react-native';
+import Header from '../components/Header';
+import { useRoute } from '@react-navigation/native';
+import { FontAwesome, FontAwesome5 } from '@expo/vector-icons';
+
+const ResultScreen = () => {
+  const route = useRoute();
+  const result1 = route.params?.resultData;
+  const result = result1["prediction"];
+
+  const [rotation, setRotation] = useState(new Animated.Value(0));
+  const [expandedIndex, setExpandedIndex] = useState(null);
+
+  const toggleExpanded = (index) => {
+    setExpandedIndex(expandedIndex === index ? null : index);
+    rotateArrow(index);
+  };
+
+  const rotateArrow = (index) => {
+    const toValue = expandedIndex === index ? 0 : 1;
+    Animated.timing(rotation, {
+      toValue,
+      duration: 300,
+      easing: Easing.linear,
+      useNativeDriver: true,
+    }).start();
+  };
+
+  var items = Object.keys(result).map((key) => [key, result[key]]);
+  items.sort((first, second) => second[1] - first[1]);
+  items = items.slice(0, 4); // slice to include only the top 4 matches
+
+  var full_name = {
+    "MEL": "Melanoma", 
+    "NV": "Melanocytic Nevus", 
+    "BCC": "Basal Cell Carcinoma", 
+    "AK": "Actinic Keratosis", 
+    "BKL": "Benign Keratosis", 
+    "DF" : "Dermatofibroma", 
+    "VASC": "Vascular Lesion", 
+    "SCC": "Squamous Cell Carcinoma"
+  };
+
+  return (
+    <View style={styles.container}>
+      <Header />
+      
+      <View style={styles.mainTextContainer}>
+        <Text style={styles.mainText}>Hello!</Text>
+        <Text style={styles.mainText}>These are your top matches:</Text>
+      </View>
+
+      <View style={styles.boxContainer}>
+        {items.map((item, index) => (
+          <View key={index} style={[styles.box, index === 1 ? styles.innerSecond : index === 2 ? styles.innerThird : styles.inner]}>
+            <TouchableOpacity onPress={() => { toggleExpanded(index); }}>
+              <View style={[styles.innerContent, { backgroundColor: index === 1 ? 'rgb(237, 115, 144)' : index === 2 ? 'rgb(229, 152, 80)' : '#45B3CB' }]}>
+                <View style={styles.row}>
+                  {expandedIndex === index ? (
+                    <Animated.View style={[styles.arrowIcon, { transform: [{ rotate: rotation.interpolate({ inputRange: [0, 1], outputRange: ['0deg', '180deg'] }) }] }]}>
+                      <FontAwesome5 name="angle-down" style={styles.arrowIcon} />
+                    </Animated.View>
+                  ) : (
+                    <FontAwesome5 name="angle-right" style={styles.arrowIcon} />
+                  )}
+                  <FontAwesome name='medkit' style={styles.innerIcon} size={24}></FontAwesome>
+                  <Text style={styles.shortenedName}>{item[0]} - {(item[1] * 100).toFixed(2)}%</Text>
+                </View>
+                {expandedIndex === index && (
+                  <View style={styles.expandedContent}>
+                    <Text style={styles.fullname}>{full_name[item[0]]}</Text>
+                    <Text style={styles.descriptionText}>{getDescription(item[0])}</Text>
+                  </View>
+                )}
+              </View>
+            </TouchableOpacity>
+          </View>        
+        ))}
+      </View>
+    </View>
+  );
+
+};
+
+
+
 
 const getDescription = (code) => {
   const descriptions = {

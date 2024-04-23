@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Dimensions, View, Image, Text, StyleSheet, Platform, TouchableOpacity } from 'react-native';
+import { Dimensions, View, Image, Text, StyleSheet, Platform, TouchableOpacity, ActivityIndicator } from 'react-native';
 import * as ImagePicker from 'expo-image-picker';
 import colors from '../../assets/colors/colors';
 import { useNavigation } from '@react-navigation/native';
@@ -101,8 +101,18 @@ const UploadScreen = () => {
       } 
     };  
 
-
+/*
+ <View style={styles.container}>
+      
+      {isUploading && (
+        <View style={styles.loaderContainer}>
+          <ActivityIndicator size="large" color={colors.accent}
+          />
+        </View>
+      )} 
+*/
   return (
+    /*
     <View style={styles.container}>
       
       {isUploading && (
@@ -113,6 +123,15 @@ const UploadScreen = () => {
           size={150}
           aria-label="Loading Spinner"
           data-testid="loader"
+          />
+        </View>
+      )} 
+      */
+    <View style={styles.container}>
+      
+      {isUploading && (
+        <View style={styles.loaderContainer}>
+          <ActivityIndicator size="large" color={colors.accent}
           />
         </View>
       )} 
@@ -183,14 +202,23 @@ const styles = StyleSheet.create({
         marginBottom: 50,
     },
     button: {
+      /*
         backgroundColor: colors.accent,
         borderRadius: 20,
-        paddingHorizontal: 10, 
+        paddingHorizontal: 20, 
         paddingVertical: 20, 
         
         marginBottom: 30, 
-        /* width: '75%',*/
+         width: '75%',
         width: screenWidth * 0.25, 
+        height: 50,
+        justifyContent: 'center',
+        alignItems: 'center',
+        */
+        backgroundColor: colors.accent,
+        borderRadius: 20,
+        padding: 10,
+        width: screenWidth * 0.75,
         height: 50,
         justifyContent: 'center',
         alignItems: 'center',
