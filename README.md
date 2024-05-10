@@ -34,10 +34,3 @@ cashel.dev/Dermetric
 * **Develop a splash screen** for the mobile app
 * **Add a treatment recommendation page** in the app that shows users the most nearby and suitable clinic given their condition
 * **Deploy the app** on Google Play Store and Apple App Store
-
-### Roles:
-* **Project Manager:** Lakshay Nagpal
-* **Front-End:** Carine Harb, David Pekar, Pranav Tonpe
-* **Back-End:** Cashel Fitzgerald, James Liu
-* **Machine Learning:** Minjae Cho, Arnav Chopra, Advik Sundar, Arjun Kumar, Aniket Gupta
-
