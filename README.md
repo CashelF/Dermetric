@@ -6,28 +6,28 @@ Dermetric is a machine learning-based diagnostic tool for skin diseases made by 
 
 The tool is powered by computer vision and a mobile application. So far, Dermetric has implemented a TensorFlow-based machine learning model for classification of various skin disorders, along with backend functionalities like model integration and image input, complemented by a designed Figma wireframe for the user interface.
 
-### Upload Screen (iPhone)
+### <u>Upload Screen (iPhone):</u>
 ![Dermetric-UploadScreenAlt](https://github.com/CashelF/Dermetric/assets/55121816/ff9c29e2-b724-410a-a53d-09d223084408)
 
-### Result Screen (iPhone)
+### <u>Result Screen (iPhone):</u>
 ![Dermetric-ResultScreenAlt](https://github.com/CashelF/Dermetric/assets/55121816/3639eb8b-e8b1-4f77-8d8d-1afe211e204a)
 
-### Upload Screen (Website)
+### <u>Upload Screen (Website):</u>
 ![Dermetric-UploadScreen-2048x1118](https://github.com/CashelF/Dermetric/assets/55121816/09c4e27c-3490-4f13-9344-37f2cde3620f)
 
-### Result Screen (Website)
+### <u>Result Screen (Website):</u>
 ![Dermetric-ResultScreen-2048x1143](https://github.com/CashelF/Dermetric/assets/55121816/5d709862-12e0-4b71-a145-27d58234b9a7)
 
-### Website Page
+### Website Page:
 cashel.dev/Dermetric
 
-### Current Progress
+### Current Progress:
 * **Hosted on AWS**
 * **Running Back-End API** on a Flask web server
 * **Completed Front-End** via React Native (currently compiles to IOS, Android, and a web app)
 * **Completed a CNN classification model** in TensorFlow (ML)
 
-### Future Steps
+### Future Steps:
 * **Increase accuracy** of the skin disease diagnostic model to at least a 90% accuracy rate
 * **Develop a splash screen** for the mobile app
 * **Add a treatment recommendation page** in the app that shows users the most nearby and suitable clinic given their condition
