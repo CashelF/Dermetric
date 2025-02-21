@@ -7,7 +7,7 @@ import ClipLoader from "react-spinners/ClipLoader";
 import NavigationBar from './NavigationBar';
 
 // Constants and utility functions
-const SERVER_URL = 'https://api.cashel.dev';
+const SERVER_URL = 'https://api.dermetric.cashel.dev';
 const screenWidth = Dimensions.get('window').width;
 const ellipseHeight = screenWidth * 1.6;
 const doctorImage = require('../../assets/images/UploadScreenDoctor.png');
