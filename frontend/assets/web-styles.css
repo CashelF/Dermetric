@@ -1,0 +1,31 @@
+/* Web-specific styles */
+html, body, #root {
+  height: 100%;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+}
+
+@media screen and (min-width: 768px) {
+  #root {
+    max-height: 100vh;
+    overflow: hidden;
+  }
+  
+  /* Center content on larger screens */
+  .container {
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+}
+
+/* Fix mobile scrolling */
+@media screen and (max-width: 767px) {
+  html, body {
+    position: fixed;
+    overflow: hidden;
+    width: 100vw;
+    height: 100vh;
+  }
+}

@@ -94,10 +94,15 @@ const rotateArrow = () => {
 };
 */
 import React, { useState, useRef } from 'react';
-import { View, StyleSheet, Text, TouchableOpacity, Animated, Easing } from 'react-native';
+import { View, StyleSheet, Text, TouchableOpacity, Animated, Easing, Platform, Dimensions } from 'react-native';
 import Header from '../components/Header';
 import { useRoute } from '@react-navigation/native';
 import { FontAwesome, FontAwesome5 } from '@expo/vector-icons';
+
+// Responsive constants
+const { width: screenWidth, height: screenHeight } = Dimensions.get('window');
+const isWeb = Platform.OS === 'web';
+const isDesktop = isWeb && screenWidth > 768;
 
 const ResultScreen = () => {
   const route = useRoute();
@@ -150,7 +155,10 @@ const ResultScreen = () => {
         {items.map((item, index) => (
           <View key={index} style={[styles.box, index === 1 ? styles.innerSecond : index === 2 ? styles.innerThird : styles.inner]}>
             <TouchableOpacity onPress={() => { toggleExpanded(index); }}>
-              <View style={[styles.innerContent, { backgroundColor: index === 1 ? 'rgb(237, 115, 144)' : index === 2 ? 'rgb(229, 152, 80)' : '#45B3CB' }]}>
+              <View style={[
+                styles.innerContent, 
+                { backgroundColor: index === 1 ? 'rgb(237, 115, 144)' : index === 2 ? 'rgb(229, 152, 80)' : '#45B3CB' }
+              ]}>
                 <View style={styles.row}>
                   {expandedIndex === index ? (
                     <Animated.View style={[styles.arrowIcon, { transform: [{ rotate: rotation.interpolate({ inputRange: [0, 1], outputRange: ['0deg', '180deg'] }) }] }]}>
@@ -198,34 +206,45 @@ const getDescription = (code) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    // Make sure container doesn't overflow on web
+    ...(isWeb && {
+      height: '100vh',
+      overflow: 'hidden'
+    })
   },
   boxContainer: {
     flex: 1,
-    paddingHorizontal: 20,
+    paddingHorizontal: isDesktop ? '10%' : 20,
     paddingTop: 10,
-    height: '25%', 
+    height: '25%',
+    // On desktop, center the content with max-width
+    ...(isDesktop && {
+      maxWidth: 1000,
+      alignSelf: 'center',
+      width: '100%'
+    })
   },
   box: {
     marginBottom: 10,
   },
-  inner : {
+  inner: {
     paddingHorizontal: 10,
-    paddingVertical: '4%',
+    paddingVertical: isDesktop ? 15 : '4%',
     borderRadius: 15,
     backgroundColor: '#45B3CB', // default blue 
   },
-    innerSecond: {
-      paddingHorizontal: 10,
-      paddingVertical: '4%',
-      borderRadius: 15,
-      backgroundColor: 'rgb(237, 115, 144)', // pink color 
-    },
-    innerThird: {
-      paddingHorizontal: 10,
-      paddingVertical: '4%', 
-      borderRadius: 15,
-      backgroundColor: 'rgb(229, 152, 80)', // orange color
-    },
+  innerSecond: {
+    paddingHorizontal: 10,
+    paddingVertical: isDesktop ? 15 : '4%',
+    borderRadius: 15,
+    backgroundColor: 'rgb(237, 115, 144)', // pink color 
+  },
+  innerThird: {
+    paddingHorizontal: 10,
+    paddingVertical: isDesktop ? 15 : '4%', 
+    borderRadius: 15,
+    backgroundColor: 'rgb(229, 152, 80)', // orange color
+  },
   row: {
     flexDirection: 'row',
     alignItems: 'center',
@@ -259,11 +278,17 @@ const styles = StyleSheet.create({
     fontSize: 14,
   },
   mainTextContainer: {
-    marginHorizontal: 22,
+    marginHorizontal: isDesktop ? '10%' : 22,
+    // Center on desktop
+    ...(isDesktop && {
+      maxWidth: 1000,
+      alignSelf: 'center',
+      width: '80%'
+    })
   },
   mainText: {
-    fontSize: 24,
-    lineHeight: 32,
+    fontSize: isDesktop ? 28 : 24,
+    lineHeight: isDesktop ? 36 : 32,
   },
   arrowIcon: {
     color: 'white',
