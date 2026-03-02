@@ -26,8 +26,9 @@ class MLService:
     def process_image(self, image_file):
         image = Image.open(image_file).convert('RGB')
         image = image.resize((self.img_width, self.img_height))
-        image_array = np.array(image)
-        image_array = tf.convert_to_tensor(image_array, dtype=tf.float32)
+        image_array = np.array(image, dtype=np.float32)
+        image_array = image_array / 255.0
+        image_array = (image_array - 0.5) * 2
         image_array = tf.expand_dims(image_array, 0)
         return image_array
 
