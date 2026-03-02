@@ -1,31 +1,29 @@
 import io
 import gc
-from flask import Blueprint, request, jsonify, current_app
+from flask import Blueprint, request, jsonify
 from app.services.ml_service import MLService
-from werkzeug.utils import secure_filename
 
-UPLOAD_FOLDER = 'IMAGES_UPLOAD_FOLDER'
 ml_bp = Blueprint('ml_bp', __name__)
 
 @ml_bp.route('/predict', methods=['POST'])
 def predict():
-  file = request.files['file']
-  if file:
-    try:
-      # Read the file to an in-memory file object
-      in_memory_file = io.BytesIO()
-      file.save(in_memory_file)
-      in_memory_file.seek(0)
+  file = request.files.get('file')
+  if not file:
+    return jsonify({'error': 'No file provided'}), 400
 
-      model_service = MLService()
-      prediction = model_service.predict(in_memory_file)
+  in_memory_file = None
+  try:
+    in_memory_file = io.BytesIO()
+    file.save(in_memory_file)
+    in_memory_file.seek(0)
+
+    model_service = MLService()
+    prediction = model_service.predict(in_memory_file)
+    return jsonify({'prediction': prediction})
+
+  except Exception as e:
+    return jsonify({'error': str(e)}), 500
+  finally:
+    if in_memory_file:
       in_memory_file.close()
-      gc.collect()
-      return jsonify({'prediction': prediction})
-
-    except Exception as e:
-      in_memory_file.close()
-      gc.collect()
-      return jsonify({'error': str(e)}), 500
-
-  return jsonify({'error': 'No file provided'}), 400
+    gc.collect()

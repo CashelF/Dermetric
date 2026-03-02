@@ -7,7 +7,7 @@ import ClipLoader from "react-spinners/ClipLoader";
 import NavigationBar from './NavigationBar';
 
 // Constants and utility functions
-const SERVER_URL = 'https://api.dermetric.cashel.dev';
+const SERVER_URL = 'https://cashel-dermetric-skin-classifier.hf.space';
 const { width: screenWidth, height: screenHeight } = Dimensions.get('window');
 // Use responsive calculations based on screen size
 const isWeb = Platform.OS === 'web';

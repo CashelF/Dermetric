@@ -1,6 +1,7 @@
 import tensorflow as tf
 import numpy as np
 from PIL import Image
+from huggingface_hub import hf_hub_download
 
 def singleton(cls):
     instances = {}
@@ -16,10 +17,14 @@ class MLService:
     def __init__(self):
         self.img_width = 224
         self.img_height = 224
-        self.model = tf.keras.models.load_model('app/static/serialized_models/dermetric_model_attempt_1')
+        model_path = hf_hub_download(
+            repo_id="Miguel764/efficientnetv2s-skin-cancer-classifier",
+            filename="efficientnetv2s.h5"
+        )
+        self.model = tf.keras.models.load_model(model_path)
 
     def process_image(self, image_file):
-        image = Image.open(image_file).convert('RGB') # convert to RGB for consistency, pngs have transparency channel
+        image = Image.open(image_file).convert('RGB')
         image = image.resize((self.img_width, self.img_height))
         image_array = np.array(image)
         image_array = tf.convert_to_tensor(image_array, dtype=tf.float32)
@@ -30,7 +35,7 @@ class MLService:
         try:
             processed_image = self.process_image(image_file)
             prediction = self.model.predict(processed_image)
-            labels = ['AK', 'BCC', 'BKL', 'DF', 'MEL', 'NV', 'SCC', 'VASC']
+            labels = ['AKIEC', 'BCC', 'BKL', 'DF', 'MEL', 'NV', 'VASC']
             prediction_dict = dict(zip(labels, prediction[0].tolist()))
             return prediction_dict
         except Exception as e:
